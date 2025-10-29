@@ -7,19 +7,36 @@ module MarketData
     BASE_URL = URI("https://query1.finance.yahoo.com/v8/finance/chart")
 
     def daily_candles(symbol:, range: "1y", interval: "1d")
-      response = Net::HTTP.get_response(build_uri(symbol, range, interval))
-      raise "Yahoo request failed" unless response.is_a?(Net::HTTPSuccess)
+      response = perform_request(symbol, range, interval)
+      raise build_error(symbol, response) unless response.is_a?(Net::HTTPSuccess)
 
       parse_payload(response.body)
     end
 
     private
 
+    def perform_request(symbol, range, interval)
+      uri = build_uri(symbol, range, interval)
+      request = Net::HTTP::Get.new(uri)
+      request["User-Agent"] = "Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)"
+      request["Accept"] = "application/json"
+
+      Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https") do |http|
+        http.request(request)
+      end
+    end
+
     def build_uri(symbol, range, interval)
       uri = BASE_URL.dup
       uri.path = "#{BASE_URL.path}/#{CGI.escape(symbol)}"
       uri.query = URI.encode_www_form(range:, interval:, includeAdjustedClose: true)
       uri
+    end
+
+    def build_error(symbol, response)
+      status = response&.code
+      snippet = response&.body&.slice(0, 200)
+      "Yahoo request failed for #{symbol} (status #{status}): #{snippet}"
     end
 
     def parse_payload(body)
