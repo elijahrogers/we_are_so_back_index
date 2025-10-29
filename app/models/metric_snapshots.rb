@@ -1,0 +1,2 @@
+class MetricSnapshot < ApplicationRecord
+end
