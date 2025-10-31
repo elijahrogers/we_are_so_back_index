@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_29_215950) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_31_060535) do
   create_table "metric_snapshots", force: :cascade do |t|
     t.decimal "ndx_change_30d", precision: 8, scale: 4
     t.decimal "btc_change_30d", precision: 8, scale: 4
@@ -18,6 +18,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_29_215950) do
     t.integer "bottom_half_advancers"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date", null: false
+    t.index ["date"], name: "index_metric_snapshots_on_date", unique: true
   end
 
   create_table "prices", force: :cascade do |t|
