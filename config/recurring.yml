@@ -12,10 +12,10 @@
 development:
   price_ingest_daily:
     class: PriceIngestJob
-    schedule: every day at 6:30pm
+    schedule: every day at 6:30pm America/Los_Angeles
   metric_compute_daily:
     class: MetricComputeJob
-    schedule: every day at 7:00pm
+    schedule: every day at 7:00pm America/Los_Angeles
 
 production:
   clear_solid_queue_finished_jobs:
@@ -23,7 +23,7 @@ production:
     schedule: every hour at minute 12
   price_ingest_daily:
     class: PriceIngestJob
-    schedule: every day at 6:30pm America/New_York
+    schedule: every day at 6:30pm America/Los_Angeles
   metric_compute_daily:
     class: MetricComputeJob
-    schedule: every day at 7:00pm America/New_York
+    schedule: every day at 7:00pm America/Los_Angeles

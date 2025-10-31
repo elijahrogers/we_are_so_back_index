@@ -9,6 +9,7 @@ class MetricComputeJob < ApplicationJob
     MetricSnapshot.create!(attributes)
   rescue StandardError => error
     Rails.logger.error("Metric compute failed: #{error.message}")
+    Rails.logger.error(attributes.to_json)
     raise
   end
 end
