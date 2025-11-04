@@ -1,3 +1,27 @@
 <h1>Index#show</h1>
 <p>Find me in app/views/index/show.html.erb</p>
 <p>Metric value: <%= @metric.value %></p>
+
+<ul>
+  <li>Bottom half advancers: <%= @metric.bottom_half_advancers %></li>
+  <li>VIX percentile: <%= @metric.vix_percentile %></li>
+  <li>NDX change 30d: <%= @metric.ndx_change_30d %></li>
+  <li>BTC change 30d: <%= @metric.btc_change_30d %></li>
+</ul>
+
+<% sorted = @metrics.sort_by(&:date) %>
+<div
+  data-controller="metric-chart"
+  data-metric-chart-labels-value='<%= sorted.map { |m| m.date.to_s }.to_json %>'
+  data-metric-chart-datasets-value='<%= [
+    { label: "Metric", data: sorted.map { |m| m.value.to_f } },
+    { label: "Bottom half", data: sorted.map { |m| m.bottom_half_value.to_f } },
+    { label: "VIX", data: sorted.map { |m| m.vix_value.to_f } },
+    { label: "NDX", data: sorted.map { |m| m.ndx_value.to_f } },
+    { label: "BTC", data: sorted.map { |m| m.btc_value.to_f } }
+  ].to_json %>'
+  class="w-full my-4">
+  <div class="w-full h-64">
+    <canvas data-metric-chart-target="canvas" class="w-full h-full"></canvas>
+  </div>
+</div>
