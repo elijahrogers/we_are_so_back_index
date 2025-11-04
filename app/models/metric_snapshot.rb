@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: metric_snapshots
+#
+#  id                    :integer          not null, primary key
+#  bottom_half_advancers :integer
+#  btc_change_30d        :decimal(8, 4)
+#  date                  :date             not null
+#  ndx_change_30d        :decimal(8, 4)
+#  vix_percentile        :decimal(5, 2)
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#
+# Indexes
+#
+#  index_metric_snapshots_on_date  (date) UNIQUE
+#
 class MetricSnapshot < ApplicationRecord
   def value
     (bottom_half_value + vix_value + ndx_value + btc_value) * 25
