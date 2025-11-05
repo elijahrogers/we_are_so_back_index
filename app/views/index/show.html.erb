@@ -1,6 +1,20 @@
-<h1>Index#show</h1>
-<p>Find me in app/views/index/show.html.erb</p>
-<p>Metric value: <%= @metric.value %></p>
+Today's prognosis: <%= @metric.value %> (<%= metric_value_description(@metric.value) %>)
+
+<div
+  data-controller="index-gauge"
+  data-index-gauge-value-value="<%= @metric.value.to_f %>"
+  data-index-gauge-min-value="-20"
+  data-index-gauge-max-value="20"
+  data-index-gauge-segments-value='[
+    {"label":"Very Bearish","weight":25,"color":"#ef4444"},
+    {"label":"Bearish","weight":25,"color":"#f59e0b"},
+    {"label":"Neutral","weight":20,"color":"#9ca3af"},
+    {"label":"Bullish","weight":15,"color":"#22c55e"},
+    {"label":"Very Bullish","weight":15,"color":"#16a34a"}
+  ]'
+  class="max-w-sm mx-auto my-6">
+  <svg data-index-gauge-target="svg" class="w-full h-auto"></svg>
+</div>
 
 <ul>
   <li>Bottom half advancers: <%= @metric.bottom_half_advancers %></li>
