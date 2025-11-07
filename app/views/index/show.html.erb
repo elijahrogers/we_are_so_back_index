@@ -1,19 +1,21 @@
 Today's prognosis: <%= @metric.value %> (<%= metric_value_description(@metric.value) %>)
 
 <div
-  data-controller="index-gauge"
-  data-index-gauge-value-value="<%= @metric.value.to_f %>"
-  data-index-gauge-min-value="-25"
-  data-index-gauge-max-value="25"
-  data-index-gauge-segments-value="<%= [
+  data-controller="index-gauge-gl"
+  data-index-gauge-gl-value-value="<%= @metric.value.to_f %>"
+  data-index-gauge-gl-min-value="-25"
+  data-index-gauge-gl-max-value="25"
+  data-index-gauge-gl-inner-ratio-value="0.6"
+  data-index-gauge-gl-segments-value="<%= [
     { label: "We never even started", weight:10, color: "#ef4444", image: image_path('never_started.png')},
     { label: "Its Joever", weight: 10, color: "#f59e0b", image: image_path('joever.png')},
     { label: "Chopped", weight: 10, color: "#9ca3af", image: image_path('chopped.png')},
     { label: "Cooking", weight: 10, color: "#22c55e", image: image_path('cooking.png')},
     { label: "We are so back", weight: 10, color: "#16a34a", image: image_path('so_back.png')},
   ].to_json %>"
-  class="max-w-5xl mx-auto my-6">
-  <svg data-index-gauge-target="svg" class="w-full h-auto"></svg>
+  class="relative max-w-5xl mx-auto my-6">
+  <canvas data-index-gauge-gl-target="canvas" class="w-full block"></canvas>
+  <svg data-index-gauge-gl-target="svg" class="absolute inset-0 w-full h-full pointer-events-none"></svg>
 </div>
 
 <ul>
