@@ -9,9 +9,9 @@ Today's prognosis: <%= @metric.value %> (<%= metric_value_description(@metric.va
   data-index-gauge-gl-segments-value="<%= [
     { label: "We never even started", weight:10, color: "#ef4444", image: image_path('never_started.png')},
     { label: "Its Joever", weight: 10, color: "#f59e0b", image: image_path('joever.png')},
-    { label: "Chopped", weight: 10, color: "#9ca3af", image: image_path('chopped.png')},
-    { label: "Cooking", weight: 10, color: "#22c55e", image: image_path('cooking.png')},
-    { label: "We are so back", weight: 10, color: "#16a34a", image: image_path('so_back.png')},
+    { label: "It's Chopped", weight: 10, color: "#9ca3af", image: image_path('yeah.png')},
+    { label: "We are so back", weight: 10, color: "#16a34a", image: image_path('so_back_alt_alt.png')},
+    { label: "We've never been so back", weight: 10, color: "#16a34a", image: image_path('never_been_so_back.png')},
   ].to_json %>"
   class="relative max-w-5xl mx-auto my-6">
   <canvas data-index-gauge-gl-target="canvas" class="w-full block"></canvas>

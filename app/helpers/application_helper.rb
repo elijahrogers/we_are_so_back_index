@@ -4,10 +4,8 @@ module ApplicationHelper
       "We never even started"
     elsif value < -10
       "It's joever"
-    elsif value < 0
-      "Chopped"
     elsif value < 10
-      "Cooking"
+      "It's Chopped"
     elsif value < 20
       "We are so back"
     else
