@@ -13,7 +13,8 @@ export default class extends Controller {
     segments: Array, // [{ label, weight, color, image, imageScale, imageOffsetX, imageOffsetY, imageRotate }]
     startAngle: { type: Number, default: -Math.PI },
     endAngle: { type: Number, default: 0 },
-    innerRatio: { type: Number, default: 0.68 } // 0..1 of outerRadius
+    innerRatio: { type: Number, default: 0.68 }, // 0..1 of outerRadius
+    labelOffset: { type: Number, default: 16 }
   }
 
   connect() {
@@ -46,6 +47,7 @@ export default class extends Controller {
     this._buildSegmentsGeometry(dims)
     this._compileDrawCommand()
     this._drawAll(dims)
+    this._renderLabels(dims)
     this._ensureNeedle(dims)
     this._updateNeedle()
   }
@@ -94,6 +96,7 @@ export default class extends Controller {
         a1,
         a2,
         positions,
+        label: seg.label || "",
         color: this._parseColor(seg.color || '#e5e7eb'),
         imageUrl: seg.image,
         imageScale: seg.imageScale ?? 1,
@@ -230,10 +233,59 @@ export default class extends Controller {
   }
 
   // --- Needle overlay (SVG) ---
+  _renderLabels(dims) {
+    const svg = this.svgTarget
+    if (!svg) return
+    const existing = svg.querySelector('#labels')
+    if (existing) existing.remove()
+    const r = Math.max(4, Math.min(dims.outerRadius + (this.labelOffsetValue ?? 16), dims.centerY - 2))
+
+    const makeArc = (a1, a2) => {
+      const p1 = [dims.centerX + r * Math.cos(a1), dims.centerY + r * Math.sin(a1)]
+      const p2 = [dims.centerX + r * Math.cos(a2), dims.centerY + r * Math.sin(a2)]
+      const largeArc = Math.abs(a2 - a1) > Math.PI ? 1 : 0
+      return `M ${p1[0]} ${p1[1]} A ${r} ${r} 0 ${largeArc} 1 ${p2[0]} ${p2[1]}`
+    }
+
+    const labelsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    labelsGroup.setAttribute('id', 'labels')
+    svg.appendChild(labelsGroup)
+
+    this._slices?.forEach((slice, idx) => {
+      const id = `label-path-${idx}-${Math.random().toString(36).slice(2)}`
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      path.setAttribute('id', id)
+      path.setAttribute('d', makeArc(slice.a1, slice.a2))
+      path.setAttribute('fill', 'none')
+      path.setAttribute('stroke', 'none')
+      labelsGroup.appendChild(path)
+
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+      text.setAttribute('fill', '#000000')
+      text.setAttribute('stroke', '#ffffff')
+      text.setAttribute('stroke-width', '2')
+      text.setAttribute('font-weight', '600')
+      text.setAttribute('font-size', '14')
+      text.setAttribute('text-anchor', 'middle')
+      text.setAttribute('paint-order', 'stroke fill')
+      text.setAttribute('vector-effect', 'non-scaling-stroke')
+      text.setAttribute('style', 'pointer-events: none')
+
+      const textPath = document.createElementNS('http://www.w3.org/2000/svg', 'textPath')
+      textPath.setAttribute('href', `#${id}`)
+      textPath.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `#${id}`)
+      textPath.setAttribute('startOffset', '50%')
+      textPath.textContent = `${slice.label ?? ''}`
+      text.appendChild(textPath)
+      labelsGroup.appendChild(text)
+    })
+  }
+
   _ensureNeedle(dims) {
     const svg = this.svgTarget
     svg.setAttribute('viewBox', `0 0 ${dims.width} ${dims.height}`)
-    svg.innerHTML = ''
+    const existing = svg.querySelector('#needle')
+    if (existing) existing.remove()
 
     const needleLen = dims.needleLength
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g')
