@@ -19,7 +19,6 @@ export default class extends Controller {
 
   valueValueChanged() {
     this.updateNeedle()
-    this.updateCenterLabel()
   }
 
   render() {
@@ -34,29 +33,31 @@ export default class extends Controller {
 
     this._renderSlices(defs, slicesGroup, dims, segments)
     this._appendNeedle(svg, dims)
-    this._appendCenterLabel(svg, dims)
 
     this.updateNeedle()
-    this.updateCenterLabel()
   }
 
   updateNeedle() {
     const svg = this.svgTarget
     if (!svg) return
     const deg = this._computeAngleDegForValue(this.valueValue)
+    const dims = this._computeDimensions()
     const needleGroup = svg.querySelector('#needle')
-    if (needleGroup) needleGroup.setAttribute('transform', `rotate(${deg} 100 100)`)
-  }
-
-  updateCenterLabel() {
-    const svg = this.svgTarget
-    if (!svg) return
-    const label = svg.querySelector('#center-label')
-    if (label) label.textContent = `${Math.round(this.valueValue ?? this.minValue)}`
+    if (needleGroup) needleGroup.setAttribute('transform', `rotate(${deg} ${dims.centerX} ${dims.centerY})`)
   }
 
   _computeDimensions() {
-    return { width: 200, height: 120, cx: 100, cy: 100, rOuter: 90, rInner: 62 }
+    const outerRadius = 300
+
+    return {
+      width: 1200,
+      height: 720,
+      centerX: 600,
+      centerY: 600,
+      outerRadius: 300,
+      innerRadius: 62,
+      needleLength: outerRadius * 0.92
+    }
   }
 
   _resolveSegments() {
@@ -98,7 +99,7 @@ export default class extends Controller {
       const a2 = current + delta
       current = a2
 
-      const d = this._donutSlicePathByDims(dims, a1, a2)
+      const d = this._pieSlicePathByDims(dims, a1, a2)
       const base = this._el('path', {
         d,
         fill: seg.color || '#e5e7eb',
@@ -117,11 +118,11 @@ export default class extends Controller {
     clip.appendChild(this._el('path', { d: pathD }))
     defs.appendChild(clip)
 
-    const imgSize = dims.rOuter * 2
+    const imgSize = dims.outerRadius * 2
     const img = this._el('image', {
       href: imageUrl,
-      x: dims.cx - dims.rOuter,
-      y: dims.cy - dims.rOuter,
+      x: dims.centerX - dims.outerRadius,
+      y: dims.centerY - dims.outerRadius,
       width: imgSize,
       height: imgSize,
       preserveAspectRatio: 'xMidYMid slice',
@@ -139,31 +140,18 @@ export default class extends Controller {
   }
 
   _appendNeedle(svg, dims) {
-    const needleLen = dims.rOuter * 0.92
+    const needleLen = dims.outerRadius * 0.92
     const needleGroup = this._el('g', { id: 'needle', style: 'transition: transform .25s ease-out' })
     const needle = this._el('line', {
-      x1: dims.cx, y1: dims.cy,
-      x2: dims.cx + needleLen, y2: dims.cy,
+      x1: dims.centerX, y1: dims.centerY,
+      x2: dims.centerX + needleLen, y2: dims.centerY,
       stroke: '#111827',
       'stroke-width': 3
     })
     needleGroup.appendChild(needle)
-    const hub = this._el('circle', { cx: dims.cx, cy: dims.cy, r: 6, fill: '#111827' })
+    const hub = this._el('circle', { cx: dims.centerX, cy: dims.centerY, r: 6, fill: '#111827' })
     needleGroup.appendChild(hub)
     svg.appendChild(needleGroup)
-  }
-
-  _appendCenterLabel(svg, dims) {
-    const label = this._el('text', {
-      id: 'center-label',
-      x: dims.cx,
-      y: dims.cy - (dims.rOuter - dims.rInner) * 0.35,
-      'text-anchor': 'middle',
-      'dominant-baseline': 'middle',
-      fill: '#111827'
-    })
-    label.style.font = '600 16px ui-sans-serif, system-ui, -apple-system'
-    svg.appendChild(label)
   }
 
   _computeAngleDegForValue(rawVal) {
@@ -175,18 +163,15 @@ export default class extends Controller {
     return rad * 180 / Math.PI
   }
 
-  _donutSlicePathByDims(dims, a1, a2) {
-    const [cx, cy, rOuter, rInner] = [dims.cx, dims.cy, dims.rOuter, dims.rInner]
-    const [x1, y1] = [cx + rOuter * Math.cos(a1), cy + rOuter * Math.sin(a1)]
-    const [x2, y2] = [cx + rOuter * Math.cos(a2), cy + rOuter * Math.sin(a2)]
-    const [x3, y3] = [cx + rInner * Math.cos(a2), cy + rInner * Math.sin(a2)]
-    const [x4, y4] = [cx + rInner * Math.cos(a1), cy + rInner * Math.sin(a1)]
+  _pieSlicePathByDims(dims, a1, a2) {
+    const [centerX, centerY, outerRadius] = [dims.centerX, dims.centerY, dims.outerRadius]
+    const [x1, y1] = [centerX + outerRadius * Math.cos(a1), centerY + outerRadius * Math.sin(a1)]
+    const [x2, y2] = [centerX + outerRadius * Math.cos(a2), centerY + outerRadius * Math.sin(a2)]
     const largeArc = (Math.abs(a2 - a1) > Math.PI) ? 1 : 0
     return [
-      `M ${x1} ${y1}`,
-      `A ${rOuter} ${rOuter} 0 ${largeArc} 1 ${x2} ${y2}`,
-      `L ${x3} ${y3}`,
-      `A ${rInner} ${rInner} 0 ${largeArc} 0 ${x4} ${y4}`,
+      `M ${centerX} ${centerY}`,
+      `L ${x1} ${y1}`,
+      `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x2} ${y2}`,
       'Z'
     ].join(' ')
   }

@@ -3,16 +3,16 @@ Today's prognosis: <%= @metric.value %> (<%= metric_value_description(@metric.va
 <div
   data-controller="index-gauge"
   data-index-gauge-value-value="<%= @metric.value.to_f %>"
-  data-index-gauge-min-value="-20"
-  data-index-gauge-max-value="20"
-  data-index-gauge-segments-value='[
-    {"label":"Very Bearish","weight":25,"color":"#ef4444"},
-    {"label":"Bearish","weight":25,"color":"#f59e0b"},
-    {"label":"Neutral","weight":20,"color":"#9ca3af"},
-    {"label":"Bullish","weight":15,"color":"#22c55e"},
-    {"label":"Very Bullish","weight":15,"color":"#16a34a"}
-  ]'
-  class="max-w-sm mx-auto my-6">
+  data-index-gauge-min-value="-25"
+  data-index-gauge-max-value="25"
+  data-index-gauge-segments-value="<%= [
+    { label: "We never even started", weight:10, color: "#ef4444", image: image_path('never_started.png')},
+    { label: "Its Joever", weight: 10, color: "#f59e0b", image: image_path('joever.png')},
+    { label: "Chopped", weight: 10, color: "#9ca3af", image: image_path('chopped.png')},
+    { label: "Cooking", weight: 10, color: "#22c55e", image: image_path('cooking.png')},
+    { label: "We are so back", weight: 10, color: "#16a34a", image: image_path('so_back.png')},
+  ].to_json %>"
+  class="max-w-5xl mx-auto my-6">
   <svg data-index-gauge-target="svg" class="w-full h-auto"></svg>
 </div>
 
