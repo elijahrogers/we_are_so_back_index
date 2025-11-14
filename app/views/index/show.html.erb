@@ -1,9 +1,9 @@
 <header class="py-10">
-  <h1 class="font-[Roboto Flex] text-9xl font-bold sm:text-7xl uppercase tracking-[0.25em]">
+  <h1 class="font-[Roboto Flex] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold uppercase tracking-[0.25em]">
     <%= metric_value_description(@metric.value) %>
   </h1>
 
-  <div class="pt-8 text-xl">
+  <div class="pt-8 text-base sm:text-lg md:text-xl">
     <%= @metric.date.strftime("%A %B %e, %Y") %>
   </div>
 </header>
@@ -28,9 +28,9 @@
 
 <section class="max-w-5xl mx-auto space-y-24">
   <div class="space-y-10">
-    <h2 class="text-9xl scroll-mt-24 font-extralight" id="huh">Huh</h2>
+    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl scroll-mt-24 font-extralight" id="huh">Huh</h2>
 
-    <p class="text-xl/8 pl-8">
+    <p class="text-base/7 sm:text-lg/8 md:text-xl/8 pl-8">
       Dow this. Nasdaq that. FAANG. We have indices for everything but nothing to answer the most important question:
 
       Are we back or is it Joever?
@@ -38,29 +38,29 @@
   </div>
 
   <div class="space-y-10">
-    <h2 class="text-9xl font-extralight">Still Huh</h2>
+    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">Still Huh</h2>
 
-    <p class="text-xl/8 pl-8">
+    <p class="text-base/7 sm:text-lg/8 md:text-xl/8 pl-8">
       There’s an elusive and hard to quantify aspect of the financial markets often called “Animal spirits.” Sophisticated market participants might prefer the terms “risk on/off.”
     </p>
 
-    <p class="text-xl/8 pl-8">
+    <p class="text-base/7 sm:text-lg/8 md:text-xl/8 pl-8">
       In essence, how motivated is the investing public to purchase financial assets today?
     </p>
 
-    <p class="text-xl/8 pl-8">
+    <p class="text-base/7 sm:text-lg/8 md:text-xl/8 pl-8">
       Looking at the major indices can give you some indication but it’s not a complete answer. You have to know not only whether people are ready to buy AAPL or AMZN today but if they’re buying a flaming pile of trash like CVNA.
     </p>
   </div>
 
   <div class="space-y-10">
-    <h2 class="text-9xl font-extralight">What</h2>
+    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">What</h2>
 
-    <p class="text-xl/8 pl-8">
+    <p class="text-base/7 sm:text-lg/8 md:text-xl/8 pl-8">
       The index is made of four components. I then smashed them into one number based on the vibes.
     </p>
 
-    <ul class="list-inside list-disc pl-8 text-xl/8">
+    <ul class="list-inside list-disc pl-8 text-base/7 sm:text-lg/8 md:text-xl/8">
       <li>Bottom half advancers
         <ul class="list-none pl-6">
           <li class="relative pl-4 before:content-['-'] before:absolute before:left-0">How many of the worst performing S&P500 stocks over the last year are up today</li>
@@ -86,7 +86,7 @@
 </section>
 
 <section class="max-w-5xl mx-auto space-y-24 scroll-mt-24 mt-24" id="history">
-  <h2 class="text-9xl font-extralight">Last 30 days</h2>
+  <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">Last 30 days</h2>
 
   <% sorted = @metrics.sort_by(&:date) %>
   <div
