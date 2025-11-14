@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="scroll-smooth">
   <head>
     <title><%= content_for(:title) || "Wearesobackindex" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,6 +7,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 
     <%= yield :head %>
 
@@ -22,9 +26,33 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5">
+  <body class="min-h-screen m-0 bg-black text-slate-100 relative font-['Roboto Flex']">
+    <div class="fixed inset-0 overflow-hidden -z-10">
+      <div class="absolute inset-0 [background:radial-gradient(1200px_800px_at_50%_-200px,rgba(0,160,160,0.08),transparent_60%)]"></div>
+      <div class="absolute inset-0 [background:radial-gradient(900px_700px_at_50%_120%,rgba(192,64,160,0.06),transparent_60%)]"></div>
+    </div>
+
+    <header class="sticky top-0 z-20 border-b border-white/10 bg-black/60 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-5 h-14 flex items-center justify-between">
+        <div class="flex items-baseline gap-3">
+          <a href="/" class="font-semibold tracking-tight">So back Index</a>
+          <span class="hidden sm:inline text-xs uppercase tracking-widest text-slate-400">Primary Index</span>
+        </div>
+        <nav class="flex items-center gap-6 text-sm text-slate-300">
+          <a href="#huh" class="hover:text-white">Huh</a>
+          <a href="#history" class="hover:text-white">History</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="relative z-10 mx-auto max-w-6xl px-5 py-8">
       <%= yield %>
     </main>
+
+    <footer class="border-t border-white/10">
+      <div class="mx-auto max-w-6xl px-5 h-12 text-xs text-slate-400 flex items-center">
+        For entertainment purposes only. Not investment advice.
+      </div>
+    </footer>
   </body>
 </html>
