@@ -88,18 +88,10 @@
 <section class="max-w-5xl mx-auto space-y-24 scroll-mt-24 mt-24" id="history">
   <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">Last 30 days</h2>
 
-  <% sorted = @metrics.sort_by(&:date) %>
   <div
     data-controller="metric-chart"
-    data-metric-chart-labels-value='<%= sorted.map { |m| m.date.to_s }.to_json %>'
-    data-metric-chart-datasets-value='<%= [
-      { label: "Metric", data: sorted.map { |m| m.value.to_f } },
-      { label: "Bottom half", data: sorted.map { |m| m.bottom_half_value.to_f } },
-      { label: "VIX", data: sorted.map { |m| m.vix_value.to_f } },
-      { label: "NDX", data: sorted.map { |m| m.ndx_value.to_f } },
-      { label: "BTC", data: sorted.map { |m| m.btc_value.to_f } }
-    ].to_json %>'
-    data-metric-chart-options-value='{"plugins":{"legend":{"position":"bottom","labels":{"color":"#cbd5e1","font":{"family":"Roboto Flex"}}}},"scales":{"x":{"grid":{"color":"rgba(74,58,128,0.2)"},"ticks":{"color":"#cbd5e1"}},"y":{"grid":{"color":"rgba(0,128,160,0.1)"},"ticks":{"color":"#cbd5e1"}}}}'
+    data-metric-chart-labels-value='<%= metric_chart_labels(@metrics) %>'
+    data-metric-chart-datasets-value='<%= metric_chart_data(@metrics).to_json %>'
     class="w-full my-8">
     <div class="w-full">
       <canvas data-metric-chart-target="canvas" class="w-full h-full"></canvas>

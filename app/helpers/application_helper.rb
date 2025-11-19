@@ -12,4 +12,18 @@ module ApplicationHelper
       "We've never been so back"
     end
   end
+
+  def metric_chart_labels(metrics)
+    metrics.map { |m| m.date.to_s }.to_json
+  end
+
+  def metric_chart_data(metrics)
+    [
+      { label: "Metric", data: metrics.map { |m| m.value.to_f } },
+      { label: "Bottom half", data: metrics.map { |m| m.bottom_half_value.to_f } },
+      { label: "VIX", data: metrics.map { |m| m.vix_value.to_f } },
+      { label: "NDX", data: metrics.map { |m| m.ndx_value.to_f } },
+      { label: "BTC", data: metrics.map { |m| m.btc_value.to_f } }
+    ]
+  end
 end
