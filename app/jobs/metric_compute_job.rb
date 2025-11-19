@@ -6,10 +6,9 @@ class MetricComputeJob < ApplicationJob
     attributes = payload.compact
     return if attributes.empty?
 
-    MetricSnapshot.create!(attributes)
-  rescue StandardError => error
-    Rails.logger.error("Metric compute failed: #{error.message}")
-    Rails.logger.error(attributes.to_json)
-    raise
+    date = attributes[:date] || as_of
+    snapshot = MetricSnapshot.find_or_initialize_by(date: date)
+    snapshot.assign_attributes(attributes)
+    snapshot.save!
   end
 end

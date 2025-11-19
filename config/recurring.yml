@@ -17,6 +17,14 @@ development:
     class: MetricComputeJob
     schedule: every day at 7:00pm America/Los_Angeles
 
+  price_ingest_intraday:
+    class: PriceIngestJob
+    schedule: every hour
+
+  metric_compute_intraday:
+    class: MetricComputeJob
+    schedule: every hour
+
 production:
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
@@ -27,3 +35,11 @@ production:
   metric_compute_daily:
     class: MetricComputeJob
     schedule: every day at 7:00pm America/Los_Angeles
+
+  price_ingest_intraday:
+    class: PriceIngestJob
+    schedule: every hour at minute 10
+
+  metric_compute_intraday:
+    class: MetricComputeJob
+    schedule: every hour at minute 20

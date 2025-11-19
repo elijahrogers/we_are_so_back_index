@@ -3,7 +3,7 @@ require "bigdecimal"
 class PriceIngestJob < ApplicationJob
   queue_as :default
 
-  def perform(range: "1y")
+  def perform(range: "1d")
     client = MarketData::YahooClient.new
 
     MarketData::SymbolUniverse.all.each do |symbol|

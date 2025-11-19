@@ -2,6 +2,8 @@ module Metrics
   class SnapshotBuilder
     VIX_LOOKBACK = 252
 
+    attr_reader :as_of
+
     def initialize(as_of: Date.current)
       @as_of = as_of
     end
@@ -17,8 +19,6 @@ module Metrics
     end
 
     private
-
-    attr_reader :as_of
 
     def percent_change(symbol, offset)
       series = Price.where(symbol: symbol, date: (as_of - offset)..as_of).order(date: :asc)
