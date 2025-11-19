@@ -8,3 +8,15 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+@font-face {
+  font-family: 'League Mono';
+  src: url('LeagueMono-VF.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'League Mono', system-ui, sans-serif;
+}
