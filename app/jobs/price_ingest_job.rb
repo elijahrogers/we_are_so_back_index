@@ -26,8 +26,6 @@ class PriceIngestJob < ApplicationJob
       price.volume = to_decimal(bar[:volume])
       price.adjusted_close = to_decimal(bar[:adjusted_close] || bar[:close])
       price.save!
-    rescue StandardError => error
-      Rails.logger.warn("Price ingest failed for #{symbol} on #{bar[:date]}: #{error.message}")
     end
   rescue StandardError => error
     Rails.logger.warn("Price ingest failed for #{symbol}: #{error.message}")

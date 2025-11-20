@@ -19,11 +19,11 @@ development:
 
   price_ingest_intraday:
     class: PriceIngestJob
-    schedule: every hour
+    schedule: "0 6-13 * * 1-5 America/Los_Angeles"
 
   metric_compute_intraday:
     class: MetricComputeJob
-    schedule: every hour
+    schedule: "0 6-13 * * 1-5 America/Los_Angeles"
 
 production:
   clear_solid_queue_finished_jobs:
@@ -38,8 +38,8 @@ production:
 
   price_ingest_intraday:
     class: PriceIngestJob
-    schedule: every hour at minute 10
+    schedule: "0 6-13 * * 1-5 America/Los_Angeles"
 
   metric_compute_intraday:
     class: MetricComputeJob
-    schedule: every hour at minute 20
+    schedule: "0 6-13 * * 1-5 America/Los_Angeles"
