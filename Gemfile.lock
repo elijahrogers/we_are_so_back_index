@@ -149,7 +149,7 @@ GEM
       zeitwerk (>= 2.6.18, < 3.0)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
-    log_bench (0.5.0)
+    log_bench (0.5.3)
       curses (~> 1.5)
       lograge (~> 0.14)
       net-http (~> 0.6)
@@ -184,8 +184,8 @@ GEM
       stimulus-rails
       turbo-rails
     msgpack (1.8.0)
-    net-http (0.7.0)
-      uri
+    net-http (0.8.0)
+      uri (>= 0.11.1)
     net-imap (0.5.12)
       date
       net-protocol
