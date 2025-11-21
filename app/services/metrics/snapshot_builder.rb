@@ -18,7 +18,7 @@ module Metrics
       }
     end
 
-    private
+    # private
 
     def percent_change(symbol, offset)
       series = Price.where(symbol: symbol, date: (as_of - offset)..as_of).order(date: :asc)
@@ -55,7 +55,7 @@ module Metrics
         entries = latest_grouped[symbol]&.sort_by(&:date)&.last(2)
         next false unless entries&.size == 2
 
-        entries.last.close.to_f > entries.first.close.to_f
+        entries.last.adjusted_close.to_f > entries.first.adjusted_close.to_f
       end
     end
 
