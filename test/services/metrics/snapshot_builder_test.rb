@@ -4,23 +4,21 @@ module Metrics
   class SnapshotBuilderTest < ActiveSupport::TestCase
     describe "#call" do
       before do
-        default_data = { open: 0, high: 0, low: 0, close: 0, volume: 0 }
+        default_data = { open: 0, high: 0, low: 0, close: 0, volume: 0, adjusted_close: rand(1..100) }
+
         365.times do |i|
-          Price.create!(symbol: "^NDX", date: Date.current - i.days, **default_data, adjusted_close: rand(1000..10000))
-          Price.create!(symbol: "BTC-USD", date: Date.current - i.days, **default_data, adjusted_close: rand(10000..100000))
-          Price.create!(symbol: "^VIX", date: Date.current - i.days, **default_data, adjusted_close: rand(10..100))
-          Price.create!(symbol: "TSLA", date: Date.current - i.days, **default_data, adjusted_close: rand(100..1000))
+          Price.create!(symbol: "^NDX", date: Date.current - i.days, **default_data)
+          Price.create!(symbol: "BTC-USD", date: Date.current - i.days, **default_data)
+          Price.create!(symbol: "^VIX", date: Date.current - i.days, **default_data)
+          Price.create!(symbol: "TSLA", date: Date.current - i.days, **default_data)
         end
+
         MarketData::SymbolUniverse.stubs(:sp500_constituents).returns([ "TSLA" ])
       end
 
       after do
         MarketData::SymbolUniverse.unstub(:sp500_constituents)
         Price.delete_all
-      end
-
-      it "verifies stubbed S&P constituents" do
-        assert_equal [ "TSLA" ], MarketData::SymbolUniverse.sp500_constituents
       end
 
       it "builds a snapshot for the current date by default" do
@@ -35,14 +33,15 @@ module Metrics
       end
     end
 
-    describe "#percent_change" do
+    describe "#change" do
       before do
-        Price.create!(symbol: "^NDX", date: Date.current - 1.month, open: 100, high: 100, low: 100, close: 100, volume: 100, adjusted_close: 100)
-        Price.create!(symbol: "^NDX", date: Date.current, open: 110, high: 110, low: 110, close: 110, volume: 100, adjusted_close: 110)
+        default_data = { open: 0, high: 0, low: 0, close: 0, volume: 0 }
+        Price.create!(symbol: "^NDX", date: Date.current - 1.month, adjusted_close: 100, **default_data)
+        Price.create!(symbol: "^NDX", date: Date.current, adjusted_close: 110, **default_data)
       end
 
       it "calculates the correct percent change" do
-        assert_equal 0.1, Metrics::SnapshotBuilder.new.percent_change("^NDX", 1.month)
+        assert_equal 0.1, Metrics::SnapshotBuilder.new.change("^NDX", 1.month)
       end
     end
 
@@ -69,21 +68,21 @@ module Metrics
         default_data = { open: 0, high: 0, low: 0, close: 0, volume: 0 }
 
         %w[TSLA AAPL MSFT GOOG].each do |symbol|
-          Price.create!(symbol: symbol, date: Date.current - 1.year, **default_data, adjusted_close: 100)
-          Price.create!(symbol: symbol, date: Date.current - 1.day, **default_data, adjusted_close: 200)
-          Price.create!(symbol: symbol, date: Date.current, **default_data, adjusted_close: 205)
+          Price.create!(symbol: symbol, date: Date.current - 1.year, adjusted_close: 100, **default_data)
+          Price.create!(symbol: symbol, date: Date.current - 1.day, adjusted_close: 200, **default_data)
+          Price.create!(symbol: symbol, date: Date.current, adjusted_close: 205, **default_data)
         end
 
         %w[CVNA UAL].each do |symbol|
-          Price.create!(symbol: symbol, date: Date.current - 1.year, **default_data, adjusted_close: 100)
-          Price.create!(symbol: symbol, date: Date.current - 1.day, **default_data, adjusted_close: 50)
-          Price.create!(symbol: symbol, date: Date.current, **default_data, adjusted_close: 40)
+          Price.create!(symbol: symbol, date: Date.current - 1.year, adjusted_close: 100, **default_data)
+          Price.create!(symbol: symbol, date: Date.current - 1.day, adjusted_close: 50, **default_data)
+          Price.create!(symbol: symbol, date: Date.current, adjusted_close: 40, **default_data)
         end
 
         %w[PYPL INTC].each do |symbol|
-          Price.create!(symbol: symbol, date: Date.current - 1.year, **default_data, adjusted_close: 100)
-          Price.create!(symbol: symbol, date: Date.current - 1.day, **default_data, adjusted_close: 50)
-          Price.create!(symbol: symbol, date: Date.current, **default_data, adjusted_close: 75)
+          Price.create!(symbol: symbol, date: Date.current - 1.year, adjusted_close: 100, **default_data)
+          Price.create!(symbol: symbol, date: Date.current - 1.day, adjusted_close: 50, **default_data)
+          Price.create!(symbol: symbol, date: Date.current, adjusted_close: 75, **default_data)
         end
 
         MarketData::SymbolUniverse.stubs(:sp500_constituents).returns(%w[TSLA AAPL MSFT GOOG CVNA UAL PYPL INTC])
@@ -99,26 +98,26 @@ module Metrics
       end
     end
 
-    describe "#bottom_half_advancers" do
+    describe "#bottom_half_performers" do
       before do
         default_data = { open: 0, high: 0, low: 0, close: 0, volume: 0 }
 
         %w[TSLA AAPL MSFT GOOG].each do |symbol|
-          Price.create!(symbol: symbol, date: Date.current - 1.year, **default_data, adjusted_close: 100)
-          Price.create!(symbol: symbol, date: Date.current - 1.day, **default_data, adjusted_close: 200)
-          Price.create!(symbol: symbol, date: Date.current, **default_data, adjusted_close: 205)
+          Price.create!(symbol: symbol, date: Date.current - 1.year, adjusted_close: 100, **default_data)
+          Price.create!(symbol: symbol, date: Date.current - 1.day, adjusted_close: 200, **default_data)
+          Price.create!(symbol: symbol, date: Date.current, adjusted_close: 205, **default_data)
         end
 
         %w[CVNA UAL].each do |symbol|
-          Price.create!(symbol: symbol, date: Date.current - 1.year, **default_data, adjusted_close: 100)
-          Price.create!(symbol: symbol, date: Date.current - 1.day, **default_data, adjusted_close: 50)
-          Price.create!(symbol: symbol, date: Date.current, **default_data, adjusted_close: 40)
+          Price.create!(symbol: symbol, date: Date.current - 1.year, adjusted_close: 100, **default_data)
+          Price.create!(symbol: symbol, date: Date.current - 1.day, adjusted_close: 50, **default_data)
+          Price.create!(symbol: symbol, date: Date.current, adjusted_close: 40, **default_data)
         end
 
         %w[PYPL INTC].each do |symbol|
-          Price.create!(symbol: symbol, date: Date.current - 1.year, **default_data, adjusted_close: 100)
-          Price.create!(symbol: symbol, date: Date.current - 1.day, **default_data, adjusted_close: 50)
-          Price.create!(symbol: symbol, date: Date.current, **default_data, adjusted_close: 75)
+          Price.create!(symbol: symbol, date: Date.current - 1.year, adjusted_close: 100, **default_data)
+          Price.create!(symbol: symbol, date: Date.current - 1.day, adjusted_close: 50, **default_data)
+          Price.create!(symbol: symbol, date: Date.current, adjusted_close: 75, **default_data)
         end
 
         MarketData::SymbolUniverse.stubs(:sp500_constituents).returns(%w[TSLA AAPL MSFT GOOG CVNA UAL PYPL INTC])
@@ -130,7 +129,7 @@ module Metrics
       end
 
       it "returns the correct bottom half advancers" do
-        assert_equal %w[CVNA INTC PYPL UAL], Metrics::SnapshotBuilder.new.bottom_half_advancers.map(&:first).sort
+        assert_equal %w[CVNA INTC PYPL UAL], Metrics::SnapshotBuilder.new.bottom_half_performers.sort
       end
     end
   end
