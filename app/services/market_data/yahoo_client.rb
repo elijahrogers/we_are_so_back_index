@@ -8,7 +8,6 @@ module MarketData
 
     def daily_candles(symbol:, range: "1y", interval: "1d")
       response = perform_request(symbol, range, interval)
-      raise build_error(symbol, response) unless response.is_a?(Net::HTTPSuccess)
 
       parse_payload(response.body)
     end
@@ -31,12 +30,6 @@ module MarketData
       uri.path = "#{BASE_URL.path}/#{CGI.escape(symbol)}"
       uri.query = URI.encode_www_form(range:, interval:, includeAdjustedClose: true)
       uri
-    end
-
-    def build_error(symbol, response)
-      status = response&.code
-      snippet = response&.body&.slice(0, 200)
-      "Yahoo request failed for #{symbol} (status #{status}): #{snippet}"
     end
 
     def parse_payload(body)
