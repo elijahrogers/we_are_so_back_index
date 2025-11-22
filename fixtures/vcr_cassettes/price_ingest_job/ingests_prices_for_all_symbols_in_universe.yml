@@ -1,0 +1,289 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://query1.finance.yahoo.com/v8/finance/chart/%5ENDX?includeAdjustedClose=true&interval=1d&range=1d
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)
+      Host:
+      - query1.finance.yahoo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Y-Rid:
+      - 0amagjdki2n5j
+      Vary:
+      - Origin,Accept-Encoding
+      Cache-Control:
+      - public, max-age=10, stale-while-revalidate=20
+      Content-Length:
+      - '1194'
+      X-Envoy-Upstream-Service-Time:
+      - '5'
+      Date:
+      - Sat, 22 Nov 2025 06:48:19 GMT
+      Server:
+      - ATS
+      X-Envoy-Decorator-Operation:
+      - finance-chart-api--mtls-production-gq1.finance-k8s:4080/*
+      Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"chart":{"result":[{"meta":{"currency":"USD","symbol":"^NDX","exchangeName":"NIM","fullExchangeName":"Nasdaq
+        GIDS","instrumentType":"INDEX","firstTradeDate":497021400,"regularMarketTime":1763763359,"hasPrePostMarketData":false,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_York","regularMarketPrice":24239.574,"fiftyTwoWeekHigh":26182.1,"fiftyTwoWeekLow":16542.2,"regularMarketDayHigh":24521.838,"regularMarketDayLow":23854.031,"regularMarketVolume":1708132000,"longName":"NASDAQ-100","shortName":"NASDAQ-100","chartPreviousClose":24054.379,"priceHint":2,"currentTradingPeriod":{"pre":{"timezone":"EST","end":1763735400,"start":1763715600,"gmtoffset":-18000},"regular":{"timezone":"EST","end":1763758800,"start":1763735400,"gmtoffset":-18000},"post":{"timezone":"EST","end":1763773200,"start":1763758800,"gmtoffset":-18000}},"dataGranularity":"1d","range":"1d","validRanges":["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]},"timestamp":[1763735400],"indicators":{"quote":[{"open":[24137.66015625],"close":[24239.5703125],"low":[23854.029296875],"volume":[9931240000],"high":[24521.83984375]}],"adjclose":[{"adjclose":[24239.5703125]}]}}],"error":null}}'
+  recorded_at: Sat, 22 Nov 2025 06:48:19 GMT
+- request:
+    method: get
+    uri: https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?includeAdjustedClose=true&interval=1d&range=1d
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)
+      Host:
+      - query1.finance.yahoo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Y-Rid:
+      - 3714q7dki2n5k
+      Vary:
+      - Origin,Accept-Encoding
+      Cache-Control:
+      - public, max-age=10, stale-while-revalidate=20
+      Content-Length:
+      - '1182'
+      X-Envoy-Upstream-Service-Time:
+      - '5'
+      Date:
+      - Sat, 22 Nov 2025 06:48:20 GMT
+      Server:
+      - ATS
+      X-Envoy-Decorator-Operation:
+      - finance-chart-api--mtls-production-gq1.finance-k8s:4080/*
+      Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"chart":{"result":[{"meta":{"currency":"USD","symbol":"^VIX","exchangeName":"WCB","fullExchangeName":"Chicago
+        Options","instrumentType":"INDEX","firstTradeDate":631290600,"regularMarketTime":1763759701,"hasPrePostMarketData":false,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_York","regularMarketPrice":23.43,"fiftyTwoWeekHigh":60.13,"fiftyTwoWeekLow":12.7,"regularMarketDayHigh":27.84,"regularMarketDayLow":22.54,"regularMarketVolume":0,"longName":"CBOE
+        Volatility Index","shortName":"^VIX","chartPreviousClose":26.42,"priceHint":2,"currentTradingPeriod":{"pre":{"timezone":"EST","end":1763735400,"start":1763715600,"gmtoffset":-18000},"regular":{"timezone":"EST","end":1763758800,"start":1763735400,"gmtoffset":-18000},"post":{"timezone":"EST","end":1763773200,"start":1763758800,"gmtoffset":-18000}},"dataGranularity":"1d","range":"1d","validRanges":["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]},"timestamp":[1763735400],"indicators":{"quote":[{"open":[25.969999313354492],"close":[23.43000030517578],"volume":[0],"high":[27.84000015258789],"low":[22.540000915527344]}],"adjclose":[{"adjclose":[23.43000030517578]}]}}],"error":null}}'
+  recorded_at: Sat, 22 Nov 2025 06:48:20 GMT
+- request:
+    method: get
+    uri: https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?includeAdjustedClose=true&interval=1d&range=1d
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)
+      Host:
+      - query1.finance.yahoo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Y-Rid:
+      - 7g4vmvlki2n5k
+      Vary:
+      - Origin,Accept-Encoding
+      Cache-Control:
+      - public, max-age=10, stale-while-revalidate=20
+      Content-Length:
+      - '1155'
+      X-Envoy-Upstream-Service-Time:
+      - '3'
+      Date:
+      - Sat, 22 Nov 2025 06:48:20 GMT
+      Server:
+      - ATS
+      X-Envoy-Decorator-Operation:
+      - finance-chart-api--mtls-production-gq1.finance-k8s:4080/*
+      Age:
+      - '2'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"chart":{"result":[{"meta":{"currency":"USD","symbol":"BTC-USD","exchangeName":"CCC","fullExchangeName":"CCC","instrumentType":"CRYPTOCURRENCY","firstTradeDate":1410912000,"regularMarketTime":1763793900,"hasPrePostMarketData":false,"gmtoffset":0,"timezone":"UTC","exchangeTimezoneName":"UTC","regularMarketPrice":84572.75,"fiftyTwoWeekHigh":126198.07,"fiftyTwoWeekLow":74436.68,"regularMarketDayHigh":85503.01,"regularMarketDayLow":83850.03,"regularMarketVolume":120135368704,"longName":"Bitcoin
+        USD","shortName":"Bitcoin USD","chartPreviousClose":85075.96,"priceHint":2,"currentTradingPeriod":{"pre":{"timezone":"UTC","end":1763769600,"start":1763769600,"gmtoffset":0},"regular":{"timezone":"UTC","end":1763855940,"start":1763769600,"gmtoffset":0},"post":{"timezone":"UTC","end":1763855940,"start":1763855940,"gmtoffset":0}},"dataGranularity":"1d","range":"1d","validRanges":["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]},"timestamp":[1763793900],"indicators":{"quote":[{"close":[84572.75],"low":[83850.03125],"volume":[120135368704],"open":[85075.9609375],"high":[85503.0078125]}],"adjclose":[{"adjclose":[84572.75]}]}}],"error":null}}'
+  recorded_at: Sat, 22 Nov 2025 06:48:20 GMT
+- request:
+    method: get
+    uri: https://query1.finance.yahoo.com/v8/finance/chart/TSLA?includeAdjustedClose=true&interval=1d&range=1d
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)
+      Host:
+      - query1.finance.yahoo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Y-Rid:
+      - 3p1oirhki2n5l
+      Vary:
+      - Origin,Accept-Encoding
+      Cache-Control:
+      - public, max-age=10, stale-while-revalidate=20
+      Content-Length:
+      - '1194'
+      X-Envoy-Upstream-Service-Time:
+      - '4'
+      Date:
+      - Sat, 22 Nov 2025 06:48:21 GMT
+      Server:
+      - ATS
+      X-Envoy-Decorator-Operation:
+      - finance-chart-api--mtls-production-gq1.finance-k8s:4080/*
+      Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"chart":{"result":[{"meta":{"currency":"USD","symbol":"TSLA","exchangeName":"NMS","fullExchangeName":"NasdaqGS","instrumentType":"EQUITY","firstTradeDate":1277818200,"regularMarketTime":1763758801,"hasPrePostMarketData":true,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_York","regularMarketPrice":391.09,"fiftyTwoWeekHigh":488.54,"fiftyTwoWeekLow":214.25,"regularMarketDayHigh":402.8,"regularMarketDayLow":384.24,"regularMarketVolume":99125790,"longName":"Tesla,
+        Inc.","shortName":"Tesla, Inc.","chartPreviousClose":395.045,"priceHint":2,"currentTradingPeriod":{"pre":{"timezone":"EST","start":1763715600,"end":1763735400,"gmtoffset":-18000},"regular":{"timezone":"EST","start":1763735400,"end":1763758800,"gmtoffset":-18000},"post":{"timezone":"EST","start":1763758800,"end":1763773200,"gmtoffset":-18000}},"dataGranularity":"1d","range":"1d","validRanges":["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]},"timestamp":[1763735400],"indicators":{"quote":[{"high":[402.79998779296875],"close":[391.0899963378906],"volume":[100180500],"low":[383.760009765625],"open":[402.32000732421875]}],"adjclose":[{"adjclose":[391.0899963378906]}]}}],"error":null}}'
+  recorded_at: Sat, 22 Nov 2025 06:48:21 GMT
+- request:
+    method: get
+    uri: https://query1.finance.yahoo.com/v8/finance/chart/AAPL?includeAdjustedClose=true&interval=1d&range=1d
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)
+      Host:
+      - query1.finance.yahoo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Y-Rid:
+      - 1upj7f9ki2n5m
+      Vary:
+      - Origin,Accept-Encoding
+      Cache-Control:
+      - public, max-age=10, stale-while-revalidate=20
+      Content-Length:
+      - '1189'
+      X-Envoy-Upstream-Service-Time:
+      - '50'
+      Date:
+      - Sat, 22 Nov 2025 06:48:21 GMT
+      Server:
+      - ATS
+      X-Envoy-Decorator-Operation:
+      - finance-chart-api--mtls-production-gq1.finance-k8s:4080/*
+      Age:
+      - '1'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"chart":{"result":[{"meta":{"currency":"USD","symbol":"AAPL","exchangeName":"NMS","fullExchangeName":"NasdaqGS","instrumentType":"EQUITY","firstTradeDate":345479400,"regularMarketTime":1763758802,"hasPrePostMarketData":true,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_York","regularMarketPrice":271.49,"fiftyTwoWeekHigh":277.32,"fiftyTwoWeekLow":169.21,"regularMarketDayHigh":273.315,"regularMarketDayLow":265.82,"regularMarketVolume":55524271,"longName":"Apple
+        Inc.","shortName":"Apple Inc.","chartPreviousClose":266.25,"priceHint":2,"currentTradingPeriod":{"pre":{"timezone":"EST","end":1763735400,"start":1763715600,"gmtoffset":-18000},"regular":{"timezone":"EST","end":1763758800,"start":1763735400,"gmtoffset":-18000},"post":{"timezone":"EST","end":1763773200,"start":1763758800,"gmtoffset":-18000}},"dataGranularity":"1d","range":"1d","validRanges":["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]},"timestamp":[1763735400],"indicators":{"quote":[{"low":[265.6700134277344],"close":[271.489990234375],"open":[265.95001220703125],"volume":[58784100],"high":[273.3299865722656]}],"adjclose":[{"adjclose":[271.489990234375]}]}}],"error":null}}'
+  recorded_at: Sat, 22 Nov 2025 06:48:21 GMT
+recorded_with: VCR 6.1.0

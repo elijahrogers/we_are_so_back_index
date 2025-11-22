@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://query1.finance.yahoo.com/v8/finance/chart/TSLA?includeAdjustedClose=true&interval=1d&range=5d
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)
+      Host:
+      - query1.finance.yahoo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Y-Rid:
+      - 3la5ct5ki2olk
+      Vary:
+      - Origin,Accept-Encoding
+      Cache-Control:
+      - public, max-age=10, stale-while-revalidate=20
+      Content-Length:
+      - '1598'
+      X-Envoy-Upstream-Service-Time:
+      - '3'
+      Date:
+      - Sat, 22 Nov 2025 07:13:56 GMT
+      Server:
+      - ATS
+      X-Envoy-Decorator-Operation:
+      - finance-chart-api--mtls-production-gq1.finance-k8s:4080/*
+      Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"chart":{"result":[{"meta":{"currency":"USD","symbol":"TSLA","exchangeName":"NMS","fullExchangeName":"NasdaqGS","instrumentType":"EQUITY","firstTradeDate":1277818200,"regularMarketTime":1763758801,"hasPrePostMarketData":true,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_York","regularMarketPrice":391.09,"fiftyTwoWeekHigh":488.54,"fiftyTwoWeekLow":214.25,"regularMarketDayHigh":402.8,"regularMarketDayLow":384.24,"regularMarketVolume":99125790,"longName":"Tesla,
+        Inc.","shortName":"Tesla, Inc.","chartPreviousClose":404.35,"priceHint":2,"currentTradingPeriod":{"pre":{"timezone":"EST","start":1763715600,"end":1763735400,"gmtoffset":-18000},"regular":{"timezone":"EST","start":1763735400,"end":1763758800,"gmtoffset":-18000},"post":{"timezone":"EST","start":1763758800,"end":1763773200,"gmtoffset":-18000}},"dataGranularity":"1d","range":"5d","validRanges":["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]},"timestamp":[1763389800,1763476200,1763562600,1763649000,1763735400],"indicators":{"quote":[{"high":[423.9599914550781,408.8999938964844,411.7799987792969,428.94000244140625,402.79998779296875],"volume":[102214300,80688600,72047700,113548800,100180500],"open":[398.739990234375,405.3800048828125,406.17999267578125,414.6300048828125,402.32000732421875],"low":[398.739990234375,393.7099914550781,398.5,394.739990234375,383.760009765625],"close":[408.9200134277344,401.25,403.989990234375,395.2300109863281,391.0899963378906]}],"adjclose":[{"adjclose":[408.9200134277344,401.25,403.989990234375,395.2300109863281,391.0899963378906]}]}}],"error":null}}'
+  recorded_at: Sat, 22 Nov 2025 07:13:56 GMT
+recorded_with: VCR 6.1.0
