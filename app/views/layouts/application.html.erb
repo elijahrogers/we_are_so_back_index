@@ -23,15 +23,10 @@
   </head>
 
   <body class="min-h-screen m-0 bg-black text-slate-100 relative">
-    <div class="fixed inset-0 overflow-hidden -z-10">
-      <div class="absolute inset-0 [background:radial-gradient(1200px_800px_at_50%_-200px,rgba(0,160,160,0.08),transparent_60%)]"></div>
-      <div class="absolute inset-0 [background:radial-gradient(900px_700px_at_50%_120%,rgba(192,64,160,0.06),transparent_60%)]"></div>
-    </div>
-
     <header class="sticky top-0 z-20 border-b border-white/10 bg-black/60 backdrop-blur">
-      <div class="mx-auto max-w-6xl px-5 h-14 flex items-center justify-between">
+      <div class="mx-auto max-w-7xl px-5 h-14 flex items-center justify-between">
         <div class="flex items-baseline gap-3">
-          <a href="/" class="font-semibold tracking-tight text-base sm:text-lg">So back Index</a>
+          <a href="/" class="font-semibold tracking-tight text-base sm:text-lg">So Back Index™</a>
         </div>
         <nav class="flex items-center gap-6 text-xs sm:text-sm md:text-base text-slate-300">
           <a href="#huh" class="hover:text-white">Huh</a>
@@ -44,9 +39,13 @@
       <%= yield %>
     </main>
 
-    <footer class="border-t border-white/10">
-      <div class="mx-auto max-w-6xl px-5 h-12 text-xs sm:text-sm text-slate-400 flex items-center">
-        For entertainment purposes only. Not investment advice.
+    <footer class="border-t border-white/10 bg-black">
+      <div class="mx-auto max-w-7xl px-5 h-12 text-xs sm:text-sm text-slate-400 flex items-center justify-between">
+        Not investment advice.
+
+        <%= link_to 'https://github.com/elijahrogers/we_are_so_back_index', class: 'hover:text-white' do %>
+          <span>GitHub</span>
+        <% end %>
       </div>
     </footer>
   </body>
