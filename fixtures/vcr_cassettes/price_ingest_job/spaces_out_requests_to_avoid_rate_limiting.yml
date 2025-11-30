@@ -1,0 +1,117 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://query1.finance.yahoo.com/v8/finance/chart/TSLA?includeAdjustedClose=true&interval=1d&range=1d
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)
+      Host:
+      - query1.finance.yahoo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Y-Rid:
+      - 6256n2tki2nlm
+      Vary:
+      - Origin,Accept-Encoding
+      Cache-Control:
+      - public, max-age=10, stale-while-revalidate=20
+      Content-Length:
+      - '1194'
+      X-Envoy-Upstream-Service-Time:
+      - '4'
+      Date:
+      - Sat, 22 Nov 2025 06:56:54 GMT
+      Server:
+      - ATS
+      X-Envoy-Decorator-Operation:
+      - finance-chart-api--mtls-production-gq1.finance-k8s:4080/*
+      Age:
+      - '3'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"chart":{"result":[{"meta":{"currency":"USD","symbol":"TSLA","exchangeName":"NMS","fullExchangeName":"NasdaqGS","instrumentType":"EQUITY","firstTradeDate":1277818200,"regularMarketTime":1763758801,"hasPrePostMarketData":true,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_York","regularMarketPrice":391.09,"fiftyTwoWeekHigh":488.54,"fiftyTwoWeekLow":214.25,"regularMarketDayHigh":402.8,"regularMarketDayLow":384.24,"regularMarketVolume":99125790,"longName":"Tesla,
+        Inc.","shortName":"Tesla, Inc.","chartPreviousClose":395.045,"priceHint":2,"currentTradingPeriod":{"pre":{"timezone":"EST","start":1763715600,"end":1763735400,"gmtoffset":-18000},"regular":{"timezone":"EST","start":1763735400,"end":1763758800,"gmtoffset":-18000},"post":{"timezone":"EST","start":1763758800,"end":1763773200,"gmtoffset":-18000}},"dataGranularity":"1d","range":"1d","validRanges":["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]},"timestamp":[1763735400],"indicators":{"quote":[{"close":[391.0899963378906],"low":[383.760009765625],"high":[402.79998779296875],"open":[402.32000732421875],"volume":[100180500]}],"adjclose":[{"adjclose":[391.0899963378906]}]}}],"error":null}}'
+  recorded_at: Sat, 22 Nov 2025 06:56:54 GMT
+- request:
+    method: get
+    uri: https://query1.finance.yahoo.com/v8/finance/chart/AAPL?includeAdjustedClose=true&interval=1d&range=1d
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Mozilla/5.0 (compatible; PriceIngestor/1.0; +https://github.com)
+      Host:
+      - query1.finance.yahoo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Y-Rid:
+      - 5iebvu1ki2nln
+      Vary:
+      - Origin,Accept-Encoding
+      Cache-Control:
+      - public, max-age=10, stale-while-revalidate=20
+      Content-Length:
+      - '1189'
+      X-Envoy-Upstream-Service-Time:
+      - '72'
+      Date:
+      - Sat, 22 Nov 2025 06:56:55 GMT
+      Server:
+      - ATS
+      X-Envoy-Decorator-Operation:
+      - finance-chart-api--mtls-production-gq1.finance-k8s:4080/*
+      Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"chart":{"result":[{"meta":{"currency":"USD","symbol":"AAPL","exchangeName":"NMS","fullExchangeName":"NasdaqGS","instrumentType":"EQUITY","firstTradeDate":345479400,"regularMarketTime":1763758802,"hasPrePostMarketData":true,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_York","regularMarketPrice":271.49,"fiftyTwoWeekHigh":277.32,"fiftyTwoWeekLow":169.21,"regularMarketDayHigh":273.315,"regularMarketDayLow":265.82,"regularMarketVolume":55524271,"longName":"Apple
+        Inc.","shortName":"Apple Inc.","chartPreviousClose":266.25,"priceHint":2,"currentTradingPeriod":{"pre":{"timezone":"EST","start":1763715600,"end":1763735400,"gmtoffset":-18000},"regular":{"timezone":"EST","start":1763735400,"end":1763758800,"gmtoffset":-18000},"post":{"timezone":"EST","start":1763758800,"end":1763773200,"gmtoffset":-18000}},"dataGranularity":"1d","range":"1d","validRanges":["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]},"timestamp":[1763735400],"indicators":{"quote":[{"low":[265.6700134277344],"open":[265.95001220703125],"close":[271.489990234375],"volume":[58784100],"high":[273.3299865722656]}],"adjclose":[{"adjclose":[271.489990234375]}]}}],"error":null}}'
+  recorded_at: Sat, 22 Nov 2025 06:56:55 GMT
+recorded_with: VCR 6.1.0
