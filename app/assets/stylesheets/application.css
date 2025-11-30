@@ -19,7 +19,37 @@
 
 body {
   font-family: 'League Mono', system-ui, sans-serif;
-
   background-color: #000000;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27' height='27' viewBox='0 0 36 36'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M3 3h12l-6 12zM21 15h12l-6-12zM3 33h12l-6-12zM21 21h12l-6 12z'/%3E%3C/g%3E%3C/svg%3E");
+  position: relative;
+}
+
+/* Background texture and animation */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27' height='27' viewBox='0 0 36 36'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M3 3h12l-6 12zM21 15h12l-6-12zM3 33h12l-6-12zM21 21h12l-6 12z'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.075;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27' height='27' viewBox='0 0 36 36'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M3 3h12l-6 12zM21 15h12l-6-12zM3 33h12l-6-12zM21 21h12l-6 12z'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.10;
+  mask-image: radial-gradient(
+    600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+    black 0%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+    black 0%,
+    transparent 100%
+  );
 }
