@@ -86,8 +86,8 @@ export default class extends Controller {
         }
       },
       scales: {
-        x: { grid: { color: "rgba(74,58,128,0.2)" }, ticks: { color: "#cbd5e1" } },
-        y: { grid: { color: "rgba(0,128,160,0.1)" }, ticks: { color: "#cbd5e1" } }
+        x: { grid: { color: "rgba(255, 255, 255, 0.3)" }, ticks: { color: "#cbd5e1" } },
+        y: { grid: { color: "rgba(255, 255, 255, 0.3)" }, ticks: { color: "#cbd5e1" } }
       }
     }
   }
