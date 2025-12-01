@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="scroll-smooth">
+<html class="scroll-smooth" data-load-posthog="<%= Rails.env.production? %>">
   <head>
     <title><%= content_for(:title) || "Wearesobackindex" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">

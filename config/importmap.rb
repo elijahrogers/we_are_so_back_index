@@ -9,3 +9,4 @@ pin "chart.js", to: "https://ga.jspm.io/npm:chart.js@4.2.0/dist/chart.js"
 pin "@kurkle/color", to: "https://ga.jspm.io/npm:@kurkle/color@0.3.2/dist/color.esm.js"
 pin "regl", to: "https://esm.sh/regl@2.1.0"
 pin "texture_animation"
+pin "posthog-js" # @1.290.0
