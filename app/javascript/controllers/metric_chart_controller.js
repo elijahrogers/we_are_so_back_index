@@ -75,9 +75,17 @@ export default class extends Controller {
     }
   }
 
+  get aspectRatio() {
+    if (window.innerWidth >= 1024) return 2      // lg+
+    if (window.innerWidth >= 768) return 1.75    // md
+    if (window.innerWidth >= 640) return 1.5     // sm
+    return 1.2                                   // mobile
+  }
+
   get defaultOptions() {
     return {
       responsive: true,
+      aspectRatio: this.aspectRatio,
       plugins: {
         legend: {
           display: true,
