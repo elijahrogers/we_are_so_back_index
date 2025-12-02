@@ -23,7 +23,7 @@ development:
 
   metric_compute_intraday:
     class: MetricComputeJob
-    schedule: "0 6-13 * * 1-5 America/Los_Angeles"
+    schedule: "30 6-13 * * 1-5 America/Los_Angeles"
 
 production:
   clear_solid_queue_finished_jobs:
@@ -42,4 +42,4 @@ production:
 
   metric_compute_intraday:
     class: MetricComputeJob
-    schedule: "0 6-13 * * 1-5 America/Los_Angeles"
+    schedule: "30 6-13 * * 1-5 America/Los_Angeles"
