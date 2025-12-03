@@ -41,14 +41,14 @@
     </main>
 
     <footer class="">
-      <div class="mx-auto max-w-xl sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl px-6 py-6 text-xs sm:text-sm text-slate-400 flex items-center justify-between">
-        Not investment advice.
+      <div class="mx-auto max-w-xl sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl px-6 py-6 text-xs sm:text-sm text-slate-400 grid grid-cols-3 items-center">
+        <span>Not investment advice.</span>
 
-        <a href="https://www.yahoo.com/?ilc=401" target="_blank">
+        <a href="https://www.yahoo.com/?ilc=401" target="_blank" class="justify-self-center">
           <img src="https://poweredby.yahoo.com/poweredby_yahoo_h_white_retina.png" class="w-20 sm:w-24 md:w-32 h-auto" alt="Powered by Yahoo"/>
         </a>
 
-        <%= link_to 'https://github.com/elijahrogers/we_are_so_back_index', class: 'hover:text-orange-500' do %>
+        <%= link_to 'https://github.com/elijahrogers/we_are_so_back_index', class: 'hover:text-orange-500 justify-self-end' do %>
           <span>GitHub</span>
         <% end %>
       </div>
