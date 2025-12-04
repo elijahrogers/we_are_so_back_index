@@ -10,7 +10,7 @@ import NeedleRenderer from "needle_renderer"
 export default class extends Controller {
   static targets = ["canvas", "svg"]
   static values = {
-    value: Number,
+    idx: Number,
     min: { type: Number, default: 0 },
     max: { type: Number, default: 100 },
     segments: Array, // [{ label, weight, color, image, imageScale, imageOffsetX, imageOffsetY, imageRotate }]
@@ -21,7 +21,7 @@ export default class extends Controller {
   }
 
   connect() {
-    this.handleResize = () => this.setupAndDraw()
+    this.handleResize = () => this.redraw()
     window.addEventListener('resize', this.handleResize, { passive: true })
 
     this.setup()
@@ -34,8 +34,8 @@ export default class extends Controller {
     this.renderer = null
   }
 
-  valueValueChanged() {
-    this.updateNeedle()
+  idxChanged() {
+    this.needleRenderer.update(this.dims)
   }
 
   setup() {
@@ -51,7 +51,12 @@ export default class extends Controller {
     this.buildAndDrawSlices()
     this.labelRenderer.draw()
     this.needleRenderer.draw()
-    this.updateNeedle()
+    this.needleRenderer.update(this.dims)
+  }
+
+  redraw() {
+    this.setup()
+    this.draw()
   }
 
   sizeCanvas() {

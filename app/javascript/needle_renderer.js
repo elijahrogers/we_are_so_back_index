@@ -10,7 +10,7 @@ export default class NeedleRenderer {
     this.minValue = controller.minValue
     this.maxValue = controller.maxValue
 
-    this.valueValue = controller.valueValue
+    this.idxValue = controller.idxValue
     this.startAngleValue = controller.startAngleValue
     this.endAngleValue = controller.endAngleValue
   }
@@ -91,7 +91,7 @@ export default class NeedleRenderer {
   computeValueRatio() {
     const min = this.minValue
     const max = this.maxValue
-    const clamped = Math.max(min, Math.min(max, this.valueValue ?? min))
+    const clamped = Math.max(min, Math.min(max, this.idxValue ?? min))
     return (clamped - min) / (max - min)
   }
 

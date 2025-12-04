@@ -21,12 +21,12 @@
 </header>
 
 <div class="relative max-w-5xl mx-auto mb-24 scroll-mt-24"
-  data-controller="index-gauge-gl"
-  data-index-gauge-gl-value-value="<%= @metric.value.to_f %>"
-  data-index-gauge-gl-min-value="-25"
-  data-index-gauge-gl-max-value="25"
-  data-index-gauge-gl-inner-ratio-value="0.6"
-  data-index-gauge-gl-segments-value="<%= [
+  data-controller="index-gauge"
+  data-index-gauge-idx-value="<%= @metric.value.to_f %>"
+  data-index-gauge-min-value="-25"
+  data-index-gauge-max-value="25"
+  data-index-gauge-inner-ratio-value="0.6"
+  data-index-gauge-segments-value="<%= [
     { label: 'We never even started', weight: 10, color: '#cc2450', image: image_path('never_started.png')},
     { label: 'Its Joever', weight: 10, color: '#cc7f00', image: image_path('joever.png')},
     { label: "It's Chopped", weight: 10, color: '#6030cc', image: image_path('yeah.png')},
@@ -34,8 +34,8 @@
     { label: "We've never been so back", weight: 10, color: '#c03080', image: image_path('never_been_so_back.png')},
   ].to_json %>"
   class="relative max-w-5xl mx-auto my-10 pt-6">
-  <canvas data-index-gauge-gl-target="canvas" class="w-full block"></canvas>
-  <svg data-index-gauge-gl-target="svg" class="absolute inset-0 w-full h-full pointer-events-none"></svg>
+  <canvas data-index-gauge-target="canvas" class="w-full block"></canvas>
+  <svg data-index-gauge-target="svg" class="absolute inset-0 w-full h-full pointer-events-none"></svg>
 </div>
 
 <section class="max-w-5xl mx-auto space-y-24">
