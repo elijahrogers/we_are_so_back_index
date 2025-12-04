@@ -1,4 +1,4 @@
-export default class GaugeDimensions {
+export default class Dimensions {
   constructor(rect, innerRatio = 0.68) {
     this.innerRatio = innerRatio
     this.rect = rect

@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
-import GaugeArcRenderer from "gauge_arc_renderer"
-import GaugeDimensions from "gauge_dimensions"
-import GaugeLabelRenderer from "gauge_label_renderer"
-import NeedleRenderer from "needle_renderer"
+import GaugeArcRenderer from "gauge/arc_renderer"
+import GaugeDimensions from "gauge/dimensions"
+import GaugeLabelRenderer from "gauge/label_renderer"
+import NeedleRenderer from "gauge/needle_renderer"
 
 // Renders pie-slice images warped via a fragment shader (polar → UV).
 // Keeps a simple SVG needle overlay for readability and easy rotation.

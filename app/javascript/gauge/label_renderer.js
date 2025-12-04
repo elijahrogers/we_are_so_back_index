@@ -1,7 +1,7 @@
 const SVG_NS = 'http://www.w3.org/2000/svg'
 const XLINK_NS = 'http://www.w3.org/1999/xlink'
 
-export default class GaugeLabelRenderer {
+export default class LabelRenderer {
   constructor(controller) {
     this.svgTarget = controller.svgTarget
     this.dims = controller.dims

@@ -48,7 +48,7 @@ const FRAGMENT_SHADER = `
 `
 
 // Renders arc segments using WebGL via regl
-export default class GaugeArcRenderer {
+export default class ArcRenderer {
   constructor(canvas) {
     this.canvas = canvas
     this.regl = null
