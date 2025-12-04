@@ -17,7 +17,8 @@
 #
 class MetricSnapshot < ApplicationRecord
   def value
-    (bottom_half_value + ndx_value + btc_value - vix_value) * 25
+    -17.2
+    # (bottom_half_value + ndx_value + btc_value - vix_value) * 25
   end
 
   def bottom_half_value
