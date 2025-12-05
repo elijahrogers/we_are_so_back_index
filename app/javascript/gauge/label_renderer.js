@@ -31,7 +31,8 @@ export default class LabelRenderer {
       <path id="${pathId}" d="${arcPath}" fill="none" stroke="none"/>
       <text fill="#fff" stroke="#fff" stroke-width="1" font-weight="${this.fontWeight}" font-size="${this.fontSize}"
             text-anchor="middle" paint-order="stroke fill"
-            vector-effect="non-scaling-stroke" style="pointer-events: none">
+            vector-effect="non-scaling-stroke"
+            class="pointer-events-none">
         <textPath href="#${pathId}" startOffset="50%">${slice.label ?? ''}</textPath>
       </text>
     `

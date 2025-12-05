@@ -1,5 +1,3 @@
-import createREGL from "regl"
-
 const VERTEX_SHADER = `
   precision mediump float;
   attribute vec2 position;
@@ -47,14 +45,18 @@ const FRAGMENT_SHADER = `
   }
 `
 
-// Renders arc segments using WebGL via regl
+// Renders arc segments using raw WebGL
 export default class ArcRenderer {
   constructor(canvas) {
     this.canvas = canvas
-    this.regl = null
-    this.drawWedge = null
+    this.gl = null
+    this.program = null
     this.textures = []
     this.slices = []
+    this.emptyTexture = null
+    this.positionBuffer = null
+    this.uniformLocations = {}
+    this.positionLocation = null
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -62,20 +64,35 @@ export default class ArcRenderer {
   // ═══════════════════════════════════════════════════════════════════════════
 
   init() {
-    if (this.regl) return
-    this.regl = createREGL({
-      canvas: this.canvas,
-      attributes: { alpha: true, antialias: true, preserveDrawingBuffer: false }
+    if (this.gl) return
+    this.gl = this.canvas.getContext('webgl', {
+      alpha: true,
+      antialias: true,
+      preserveDrawingBuffer: false
     })
-    this.compileDrawCommand()
+    if (!this.gl) {
+      console.error('WebGL not supported')
+      return
+    }
+    this.compileProgram()
+    this.createBuffers()
+    this.cacheUniformLocations()
+    this.createEmptyTexture()
   }
 
   destroy() {
-    try { this.regl?.destroy() } catch (_) {}
-    this.regl = null
-    this.drawWedge = null
+    if (!this.gl) return
+    this.textures.forEach(tex => {
+      if (tex) this.gl.deleteTexture(tex)
+    })
+    if (this.emptyTexture) this.gl.deleteTexture(this.emptyTexture)
+    if (this.positionBuffer) this.gl.deleteBuffer(this.positionBuffer)
+    if (this.program) this.gl.deleteProgram(this.program)
+    this.gl = null
+    this.program = null
     this.textures = []
     this.slices = []
+    this.emptyTexture = null
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -150,7 +167,7 @@ export default class ArcRenderer {
   // ═══════════════════════════════════════════════════════════════════════════
 
   loadTextures(onTextureLoaded) {
-    if (!this.regl) return
+    if (!this.gl) return
     this.slices.forEach(slice => this.loadTextureForSlice(slice, onTextureLoaded))
   }
 
@@ -158,43 +175,84 @@ export default class ArcRenderer {
     if (!slice.imageUrl) return
     const img = new Image()
     img.onload = () => {
-      this.textures[slice.index] = this.regl.texture({ data: img })
+      this.textures[slice.index] = this.createTextureFromImage(img)
       onTextureLoaded?.()
     }
     img.src = slice.imageUrl
+  }
+
+  createTextureFromImage(img) {
+    const gl = this.gl
+    const texture = gl.createTexture()
+    gl.bindTexture(gl.TEXTURE_2D, texture)
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+    return texture
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // WEBGL SETUP
   // ═══════════════════════════════════════════════════════════════════════════
 
-  compileDrawCommand() {
-    if (this.drawWedge) return
-    this.drawWedge = this.regl({
-      attributes: { position: this.regl.prop('positions') },
-      count: this.regl.prop('count'),
-      primitive: 'triangle fan',
-      uniforms: this.buildUniforms(),
-      vert: VERTEX_SHADER,
-      frag: FRAGMENT_SHADER
+  compileProgram() {
+    const gl = this.gl
+    const vertShader = this.compileShader(gl.VERTEX_SHADER, VERTEX_SHADER)
+    const fragShader = this.compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER)
+
+    this.program = gl.createProgram()
+    gl.attachShader(this.program, vertShader)
+    gl.attachShader(this.program, fragShader)
+    gl.linkProgram(this.program)
+
+    if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+      console.error('Program link error:', gl.getProgramInfoLog(this.program))
+    }
+
+    gl.deleteShader(vertShader)
+    gl.deleteShader(fragShader)
+  }
+
+  compileShader(type, source) {
+    const gl = this.gl
+    const shader = gl.createShader(type)
+    gl.shaderSource(shader, source)
+    gl.compileShader(shader)
+
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.error('Shader compile error:', gl.getShaderInfoLog(shader))
+    }
+    return shader
+  }
+
+  createBuffers() {
+    this.positionBuffer = this.gl.createBuffer()
+    this.positionLocation = this.gl.getAttribLocation(this.program, 'position')
+  }
+
+  cacheUniformLocations() {
+    const gl = this.gl
+    const uniforms = [
+      'resolution', 'center', 'startAngle', 'endAngle',
+      'outerRadius', 'innerRadius', 'hasTexture', 'baseColor',
+      'tex', 'imageScale', 'imageOffset', 'imageRotation'
+    ]
+    uniforms.forEach(name => {
+      this.uniformLocations[name] = gl.getUniformLocation(this.program, name)
     })
   }
 
-  buildUniforms() {
-    return {
-      resolution:    (_, props) => props.resolution,
-      center:        (_, props) => props.center,
-      startAngle:    (_, props) => props.a1,
-      endAngle:      (_, props) => props.a2,
-      outerRadius:   (_, props) => props.outerRadius,
-      innerRadius:   (_, props) => props.innerRadius,
-      hasTexture:    (_, props) => props.hasTexture,
-      baseColor:     (_, props) => props.baseColor,
-      tex:           this.regl.prop('texture'),
-      imageScale:    (_, props) => props.imageScale,
-      imageOffset:   (_, props) => props.imageOffset,
-      imageRotation: (_, props) => props.imageRotation
-    }
+  createEmptyTexture() {
+    const gl = this.gl
+    this.emptyTexture = gl.createTexture()
+    gl.bindTexture(gl.TEXTURE_2D, this.emptyTexture)
+    gl.texImage2D(
+      gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0,
+      gl.RGBA, gl.UNSIGNED_BYTE,
+      new Uint8Array([255, 255, 255, 0])
+    )
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -202,49 +260,57 @@ export default class ArcRenderer {
   // ═══════════════════════════════════════════════════════════════════════════
 
   draw(dims, dpr) {
-    if (!this.regl) return
+    if (!this.gl) return
     this.clearCanvas()
+    this.gl.useProgram(this.program)
+    this.gl.enable(this.gl.BLEND)
+    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA)
     this.slices.forEach(slice => this.drawSlice(slice, dims, dpr))
   }
 
   clearCanvas() {
-    this.regl.poll()
-    this.regl.clear({ color: [0, 0, 0, 0], depth: 1 })
+    const gl = this.gl
+    gl.viewport(0, 0, this.canvas.width, this.canvas.height)
+    gl.clearColor(0, 0, 0, 0)
+    gl.clear(gl.COLOR_BUFFER_BIT)
   }
 
   drawSlice(slice, dims, dpr) {
-    this.drawWedge(this.buildSliceProps(slice, dims, dpr))
-  }
+    const gl = this.gl
+    const u = this.uniformLocations
 
-  buildSliceProps(slice, dims, dpr) {
-    return {
-      positions: this.scalePositions(slice.positions, dpr),
-      count: slice.positions.length,
-      resolution: [dims.width * dpr, dims.height * dpr],
-      center: [dims.centerX * dpr, dims.centerY * dpr],
-      a1: slice.a1,
-      a2: slice.a2,
-      outerRadius: dims.outerRadius * dpr,
-      innerRadius: dims.innerRadius * dpr,
-      hasTexture: this.textures[slice.index] ? 1 : 0,
-      baseColor: slice.color,
-      texture: this.getTextureForSlice(slice.index),
-      imageScale: slice.imageScale,
-      imageOffset: slice.imageOffset,
-      imageRotation: slice.imageRotate
-    }
+    // Upload positions
+    const positions = this.scalePositions(slice.positions, dpr)
+    const flatPositions = new Float32Array(positions.flat())
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer)
+    gl.bufferData(gl.ARRAY_BUFFER, flatPositions, gl.DYNAMIC_DRAW)
+    gl.enableVertexAttribArray(this.positionLocation)
+    gl.vertexAttribPointer(this.positionLocation, 2, gl.FLOAT, false, 0, 0)
+
+    // Set uniforms
+    gl.uniform2f(u.resolution, dims.width * dpr, dims.height * dpr)
+    gl.uniform2f(u.center, dims.centerX * dpr, dims.centerY * dpr)
+    gl.uniform1f(u.startAngle, slice.a1)
+    gl.uniform1f(u.endAngle, slice.a2)
+    gl.uniform1f(u.outerRadius, dims.outerRadius * dpr)
+    gl.uniform1f(u.innerRadius, dims.innerRadius * dpr)
+    gl.uniform1f(u.hasTexture, this.textures[slice.index] ? 1 : 0)
+    gl.uniform4fv(u.baseColor, slice.color)
+    gl.uniform1f(u.imageScale, slice.imageScale)
+    gl.uniform2fv(u.imageOffset, slice.imageOffset)
+    gl.uniform1f(u.imageRotation, slice.imageRotate)
+
+    // Bind texture
+    gl.activeTexture(gl.TEXTURE0)
+    gl.bindTexture(gl.TEXTURE_2D, this.textures[slice.index] || this.emptyTexture)
+    gl.uniform1i(u.tex, 0)
+
+    // Draw
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, positions.length)
   }
 
   scalePositions(positions, dpr) {
     return positions.map(([x, y]) => [x * dpr, y * dpr])
-  }
-
-  getTextureForSlice(index) {
-    return this.textures[index] || this.createEmptyTexture()
-  }
-
-  createEmptyTexture() {
-    return this.regl.texture({ data: new Uint8Array([255, 255, 255, 0]), width: 1, height: 1 })
   }
 
   // ═══════════════════════════════════════════════════════════════════════════

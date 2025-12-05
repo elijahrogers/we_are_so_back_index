@@ -17,7 +17,7 @@ export default class NeedleRenderer {
     const x2 = centerX + needleLength
 
     this.svgTarget.insertAdjacentHTML('beforeend', `
-      <g id="needle" style="transition: transform .25s ease-out">
+      <g id="needle" class="transition-transform duration-250 ease-out">
         <line x1="${centerX}" y1="${centerY}" x2="${x2}" y2="${centerY}"
               stroke="#fff" stroke-width="6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
         <line x1="${centerX}" y1="${centerY}" x2="${x2}" y2="${centerY}"
