@@ -29,7 +29,7 @@ export default class LabelRenderer {
 
     return `
       <path id="${pathId}" d="${arcPath}" fill="none" stroke="none"/>
-      <text fill="#fff" stroke="#fff" stroke-width="2" font-weight="300" font-size="20"
+      <text fill="#fff" stroke="#fff" stroke-width="1" font-weight="${this.fontWeight}" font-size="${this.fontSize}"
             text-anchor="middle" paint-order="stroke fill"
             vector-effect="non-scaling-stroke" style="pointer-events: none">
         <textPath href="#${pathId}" startOffset="50%">${slice.label ?? ''}</textPath>
@@ -43,5 +43,25 @@ export default class LabelRenderer {
     const [x2, y2] = [centerX + radius * Math.cos(a2), centerY + radius * Math.sin(a2)]
     const largeArc = Math.abs(a2 - a1) > Math.PI ? 1 : 0
     return `M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}`
+  }
+
+  get fontWeight() {
+    if (this.viewPortWidth < 640) return 100
+    if (this.viewPortWidth < 768) return 200
+    if (this.viewPortWidth < 1024) return 300
+    if (this.viewPortWidth < 1280) return 400
+    return 600
+  }
+
+  get fontSize() {
+    if (this.viewPortWidth < 640) return 8
+    if (this.viewPortWidth < 768) return 11
+    if (this.viewPortWidth < 1024) return 14
+    if (this.viewPortWidth < 1280) return 18
+    return 20
+  }
+
+  get viewPortWidth() {
+    return document.documentElement.clientWidth
   }
 }
