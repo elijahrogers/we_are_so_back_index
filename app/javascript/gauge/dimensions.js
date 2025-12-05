@@ -1,11 +1,12 @@
 export default class Dimensions {
-  constructor(rect, innerRatio = 0.68) {
+  constructor(rect, innerRatio = 0.68, needleOffset = 25) {
     this.innerRatio = innerRatio
+    this.needleOffset = needleOffset
     this.rect = rect
     this.width = this.computeWidth()
     this.height = this.computeHeight()
     this.centerX = Math.round(this.width / 2)
-    this.centerY = this.height
+    this.centerY = this.height - this.needleOffset
     this.outerRadius = this.computeOuterRadius()
     this.innerRadius = this.computeInnerRadius()
     this.needleLength = Math.round(this.outerRadius * 0.92)
