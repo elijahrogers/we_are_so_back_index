@@ -1,81 +1,36 @@
-const SVG_NS = 'http://www.w3.org/2000/svg'
-
 export default class NeedleRenderer {
   constructor(controller) {
     this.svgTarget = controller.svgTarget
     this.dims = controller.dims
-    this.renderer = controller.renderer
-    this.innerRatioValue = controller.innerRatioValue
     this.minValue = controller.minValue
     this.maxValue = controller.maxValue
-
     this.idxValue = controller.idxValue
     this.startAngleValue = controller.startAngleValue
     this.endAngleValue = controller.endAngleValue
   }
 
   draw() {
-    this.setSvgViewBox()
-    this.clearNeedle()
-    this.group = this.createNeedleGroup()
-    this.createNeedleOutline()
-    this.createNeedleLine()
-    this.createNeedleHub()
-    this.svgTarget.appendChild(this.group)
-  }
-
-  setSvgViewBox() {
     this.svgTarget.setAttribute('viewBox', `0 0 ${this.dims.width} ${this.dims.height}`)
-  }
-
-  clearNeedle() {
     this.svgTarget.querySelector('#needle')?.remove()
-  }
 
-  createNeedleGroup() {
-    const g = document.createElementNS(SVG_NS, 'g')
-    g.setAttribute('id', 'needle')
-    g.setAttribute('style', 'transition: transform .25s ease-out')
-    return g
-  }
+    const { centerX, centerY, needleLength } = this.dims
+    const x2 = centerX + needleLength
 
-  createNeedleOutline() {
-    const line = this.createLine('#ffffff', '6')
-    this.group.appendChild(line)
-  }
-
-  createNeedleLine() {
-    const line = this.createLine('#000000', '3')
-    this.group.appendChild(line)
-  }
-
-  createLine(stroke, strokeWidth) {
-    const line = document.createElementNS(SVG_NS, 'line')
-    line.setAttribute('x1', `${this.dims.centerX}`)
-    line.setAttribute('y1', `${this.dims.centerY}`)
-    line.setAttribute('x2', `${this.dims.centerX + this.dims.needleLength}`)
-    line.setAttribute('y2', `${this.dims.centerY}`)
-    line.setAttribute('stroke', stroke)
-    line.setAttribute('stroke-width', strokeWidth)
-    line.setAttribute('stroke-linecap', 'round')
-    line.setAttribute('vector-effect', 'non-scaling-stroke')
-    return line
-  }
-
-  createNeedleHub() {
-    const hub = document.createElementNS(SVG_NS, 'circle')
-    hub.setAttribute('cx', `${this.dims.centerX}`)
-    hub.setAttribute('cy', `${this.dims.centerY}`)
-    hub.setAttribute('r', '6')
-    hub.setAttribute('fill', '#000000')
-    hub.setAttribute('stroke', '#ffffff')
-    hub.setAttribute('stroke-width', '2')
-    hub.setAttribute('vector-effect', 'non-scaling-stroke')
-    this.group.appendChild(hub)
+    this.svgTarget.insertAdjacentHTML('beforeend', `
+      <g id="needle" style="transition: transform .25s ease-out">
+        <line x1="${centerX}" y1="${centerY}" x2="${x2}" y2="${centerY}"
+              stroke="#fff" stroke-width="6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+        <line x1="${centerX}" y1="${centerY}" x2="${x2}" y2="${centerY}"
+              stroke="#000" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+        <circle cx="${centerX}" cy="${centerY}" r="6"
+                fill="#000" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+      </g>
+    `)
   }
 
   update(dims) {
     if (!this.svgTarget) return
+
     this.dims = dims
     const angle = this.computeNeedleAngle()
     this.rotateNeedle(angle)
