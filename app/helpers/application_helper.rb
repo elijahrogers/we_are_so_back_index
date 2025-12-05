@@ -1,12 +1,12 @@
 module ApplicationHelper
   def metric_value_description(value)
-    if value < -20
+    if value < -15
       "We never even started"
-    elsif value < -10
+    elsif value < -5
       "It's joever"
-    elsif value < 10
+    elsif value < 5
       "It's Chopped"
-    elsif value < 20
+    elsif value < 15
       "We are so back"
     else
       "We've never been so back"
