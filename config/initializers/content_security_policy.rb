@@ -10,9 +10,9 @@ Rails.application.configure do
     policy.font_src    :self, :https, :data
     policy.img_src     :self, :https, :data
     policy.object_src  :none
-    policy.script_src  :self, :https, "https://us-assets.i.posthog.com"
+    policy.script_src  :self, :https, "https://*.posthog.com"
     policy.style_src   :self, :https
-    policy.connect_src :self, :https, "https://us.i.posthog.com", "https://us-assets.i.posthog.com"
+    policy.connect_src :self, :https, "https://*.posthog.com"
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
   end
