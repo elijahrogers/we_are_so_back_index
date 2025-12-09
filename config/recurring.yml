@@ -10,13 +10,6 @@
 #     schedule: at 5am every day
 
 development:
-  price_ingest_daily:
-    class: PriceIngestJob
-    schedule: every day at 6:30pm America/Los_Angeles
-  metric_compute_daily:
-    class: MetricComputeJob
-    schedule: every day at 7:00pm America/Los_Angeles
-
   price_ingest_intraday:
     class: PriceIngestJob
     schedule: "0 6-13 * * 1-5 America/Los_Angeles"
@@ -29,12 +22,6 @@ production:
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
     schedule: every hour at minute 12
-  price_ingest_daily:
-    class: PriceIngestJob
-    schedule: every day at 6:30pm America/Los_Angeles
-  metric_compute_daily:
-    class: MetricComputeJob
-    schedule: every day at 7:00pm America/Los_Angeles
 
   price_ingest_intraday:
     class: PriceIngestJob
