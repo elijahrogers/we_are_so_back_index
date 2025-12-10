@@ -20,10 +20,10 @@ module ApplicationHelper
   def metric_chart_data(metrics)
     [
       { label: "Index", data: metrics.map { |m| m.value.to_f } },
-      { label: "Bottom half", data: metrics.map { |m| m.bottom_half_value.to_f } },
-      { label: "VIX", data: metrics.map { |m| m.vix_value.to_f } },
-      { label: "NDX", data: metrics.map { |m| m.ndx_value.to_f } },
-      { label: "BTC", data: metrics.map { |m| m.btc_value.to_f } }
+      { label: "Bottom half", data: metrics.map { |m| m.bottom_half_value.to_f }, hidden: true },
+      { label: "VIX", data: metrics.map { |m| m.vix_value.to_f }, hidden: true },
+      { label: "NDX", data: metrics.map { |m| m.ndx_value.to_f }, hidden: true },
+      { label: "BTC", data: metrics.map { |m| m.btc_value.to_f }, hidden: true }
     ]
   end
 end

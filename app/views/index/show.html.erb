@@ -47,10 +47,6 @@
 
       Are we back or is it Joever?
     </p>
-  </div>
-
-  <div class="space-y-10">
-    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">Still Huh</h2>
 
     <p class="text-base/7 sm:text-lg/8 md:text-xl/8 pl-8">
       There’s an elusive and hard to quantify aspect of the financial markets often called “Animal spirits.” Sophisticated market participants might prefer the terms “risk on/risk off.”
@@ -65,8 +61,8 @@
     </p>
   </div>
 
-  <div class="space-y-10">
-    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">What</h2>
+  <div class="space-y-10 scroll-mt-24" id="how">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">How</h2>
 
     <p class="text-base/7 sm:text-lg/8 md:text-xl/8 pl-8">
       The index consists of four components that I mashed into one number based on the vibes.
@@ -96,19 +92,20 @@
       </li>
     </ul>
   </div>
-</section>
 
-<section class="max-w-xl sm:max-w-2xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto space-y-24 scroll-mt-24 mt-24 bg-black rounded-xl p-8 ring-1 ring-white/60" id="history">
-  <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">Last 30 days</h2>
+  <section class="max-w-xl sm:max-w-2xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto space-y-24 scroll-mt-24 mt-24 bg-black rounded-xl p-8 ring-1 ring-white/60" id="history">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight">Index (Last 30 days)</h2>
 
-  <div
-    data-controller="metric-chart"
-    data-metric-chart-labels-value='<%= metric_chart_labels(@metrics) %>'
-    data-metric-chart-datasets-value='<%= metric_chart_data(@metrics).to_json %>'
-    class="w-full my-2 sm:my-4 md:my-6 lg:my-8">
-    <div class="w-full">
-      <canvas data-metric-chart-target="canvas" class="w-full h-full"></canvas>
+    <div
+      data-controller="metric-chart"
+      data-metric-chart-labels-value='<%= metric_chart_labels(@metrics) %>'
+      data-metric-chart-datasets-value='<%= metric_chart_data(@metrics).to_json %>'
+      class="w-full my-2 sm:my-4 md:my-6 lg:my-8">
+      <div class="w-full">
+        <canvas data-metric-chart-target="canvas" class="w-full h-full"></canvas>
+      </div>
     </div>
-  </div>
+  </section>
+
 </section>
 <% end %>
