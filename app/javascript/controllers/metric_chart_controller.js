@@ -41,7 +41,6 @@ export default class extends Controller {
   }
 
   formatLabels() {
-    this.formattedLabels = this.labelsValue.map(label => this.formatDateLabel(label))
     this.options.scales ||= {}
     this.options.scales.x ||= {}
     this.options.scales.x.ticks ||= {}
@@ -52,25 +51,13 @@ export default class extends Controller {
 
     this.options.scales.x.ticks.callback = (value, index) => {
       if (index % step !== 0) return ""
-      return this.formattedLabels[index] ?? ""
+      return this.labelsValue[index] ?? ""
     }
-  }
-
-  formatDateLabel(label) {
-    if (!label) return ""
-
-    const date = new Date(label) // handles "YYYY-MM-DD" nicely
-    if (Number.isNaN(date.getTime())) return label
-
-    return new Intl.DateTimeFormat(undefined, {
-      month: "short",
-      day: "numeric"
-    }).format(date)
   }
 
   get chartData() {
     return {
-      labels: this.formattedLabels,
+      labels: this.labelsValue,
       datasets: this.datasets
     }
   }

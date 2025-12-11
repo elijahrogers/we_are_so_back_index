@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def metric_chart_labels(metrics)
-    metrics.map { |m| m.date.to_s }.to_json
+    metrics.map { |m| m.date.strftime("%b %d") }.to_json
   end
 
   def metric_chart_data(metrics)
