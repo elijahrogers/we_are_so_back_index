@@ -5,7 +5,7 @@ module ApplicationHelper
     elsif value < -5
       "It's joever"
     elsif value < 5
-      "It's Chopped"
+      "¯\\_(ツ)_/¯"
     elsif value < 15
       "We are so back"
     else
