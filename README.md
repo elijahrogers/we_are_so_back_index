@@ -1,24 +1,37 @@
-# README
+### We Are So Back Index
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+I made this because I thought it was funny. Hopefully you do too. You can see the live index [here](https://wearesobackindex.com). Feel free to contribute.
 
-Things you may want to cover:
+### Running Locally
 
-* Ruby version
+This is a very standard Rails 8 app. After cloning it, you can run it locally with:
 
-* System dependencies
+```bash
+bundle install
+bundle exec rails db:prepare
+bin/dev
+```
 
-* Configuration
+And in a separate terminal window you can run background jobs with:
 
-* Database creation
+```bash
+bundle exec rails solid_queue:start
+```
 
-* Database initialization
+### Getting Data
 
-* How to run the test suite
+Once the database is set up, you need to ingest historical price data so you have something to look at.
 
-* Services (job queues, cache servers, search engines, etc.)
+1. **Ingest Historical Prices:**
+   Fetch the last 30 days of data for all 500+ symbols:
 
-* Deployment instructions
+```bash
+bundle exec rails runner "PriceIngestJob.perform_later(range: '30d')"
+```
 
-* ...
+2. **Compute Metrics:**
+   Compute the metrics for all dates in the last 30 days:
+
+```bash
+bundle exec rails backfill:metric_snapshots[2025-11-21..2025-12-11]
+```
