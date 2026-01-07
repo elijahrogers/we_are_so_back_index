@@ -25,7 +25,7 @@ class MetricSnapshot < ApplicationRecord
   end
 
   def vix_value
-    1 - (vix_percentile / 100.0)
+    vix_percentile / 100.0
   end
 
   def ndx_value
